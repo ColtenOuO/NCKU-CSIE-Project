@@ -19,12 +19,12 @@ jobs:
       - name: Install MPI and dependencies
         run: |
           sudo apt-get update
-          sudo apt-get install -y mpich libmpich-dev g++ cmake
+          sudo apt-get install -y mpich libmpich-dev g++ cmake make
 
-      - name: Compile MPI & Pthread Program
+      - name: Compile with Makefile
         run: |
-          mpic++ -o main.out main.cpp -pthread
+          make
 
-      - name: Run MPI Program with 4 Processes
+      - name: Run Program
         run: |
-          mpirun -np 4 ./main.out
+          make run
