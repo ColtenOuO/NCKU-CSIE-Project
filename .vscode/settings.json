@@ -2,6 +2,8 @@
     "C_Cpp.errorSquiggles": "disabled",
     "files.associations": {
         "ctime": "cpp",
-        "string": "cpp"
+        "string": "cpp",
+        "__locale": "cpp",
+        "set": "cpp"
     }
 }
