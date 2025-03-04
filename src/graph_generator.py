@@ -5,7 +5,7 @@ def generate_complete_graph(n, output_file):
     edges = []
     for i in range(1, n + 1):
         for j in range(i + 1, n + 1):
-            w = random.randint(1, 100)
+            w = random.randint(1, 1000000000)
             edges.append((i, j, w))
     
     with open(output_file, 'w') as f:

@@ -10,8 +10,11 @@
 #include <set>
 #include <algorithm>
 #include <bitset>
+#include <climits>
 
-#define SZ 106
+#define SZ 5000
+#define TARGET_NUMBER 1231296480
+#define int long long
 
 class DSU {
     private:
@@ -116,7 +119,6 @@ void* ant_worker(void* arg) {
     std::vector<int> total_length(NUM_ANTS, 0);
 
     for (int iteration = 0; iteration < NUM_ITERATIONS; iteration++) {
-        std::cout << iteration << "\n";
         for (int ant = 0; ant < NUM_ANTS; ant++) {
             std::bitset<SZ> result = create_tree(rng);
             int total = 0;
@@ -124,7 +126,7 @@ void* ant_worker(void* arg) {
                 if (result[i] == 1) total += edge_data[i].lengths;
             }
 
-            if( result.count() != NUM_VERTEX - 1 ) {
+            if( result.count() != static_cast<std::size_t>(NUM_VERTEX - 1) ) {
                 ant_choose[ant] = result;
                 total_length[ant] = INT_MAX;
                 continue;
@@ -132,12 +134,12 @@ void* ant_worker(void* arg) {
 
             pthread_mutex_lock(&mutex);
             s.insert(make_pair(total, result));
-            if ( s.size() > K ) s.erase(--s.end());
+            if ( s.size() > static_cast<std::size_t>(K) )  s.erase(--s.end());
             pthread_mutex_unlock(&mutex);
             ant_choose[ant] = result;
             total_length[ant] = total;
 
-            if( total == 180 ) time_tmp = std::min(time_tmp, iteration+1);
+            if( total == TARGET_NUMBER ) time_tmp = std::min(time_tmp, iteration+1);
         }
 
         pthread_mutex_lock(&mutex);
@@ -156,7 +158,7 @@ void* ant_worker(void* arg) {
     return nullptr;
 }
 
-int main(int argc, char* argv[]) {
+signed main(int argc, char* argv[]) {
     std::cout << "Testing\n";
     int size = 5;
     pthread_mutex_init(&mutex, nullptr);
@@ -201,13 +203,7 @@ int main(int argc, char* argv[]) {
 
     std::cout << "Finding " << K << "-th Spanning Tree.\n";
     std::cout << s.rbegin() -> first << "\n";
-    std::bitset<SZ> result = s.rbegin() -> second;
-
     std::cout << "iteration time: " << time_tmp << "\n";
-    
-    for( auto i : s ) {
-        std::cout << i.first << " " << i.second << "\n";
-    }
 
     pthread_mutex_destroy(&mutex);
     return 0;

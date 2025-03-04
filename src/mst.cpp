@@ -2,6 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
+#define int long long
 
 using namespace std;
 
@@ -13,7 +14,7 @@ struct EdgeData {
     }
 };
 
-int main() {
+signed main() {
     int n, m;
     cin >> n >> m;
     
