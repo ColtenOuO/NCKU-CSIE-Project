@@ -11,7 +11,7 @@ $(TARGET): $(SRCS)
 	$(MPICC) $(CXXFLAGS) -o $@ $^
 
 run: $(TARGET)
-	mpirun -np 1 ./$(TARGET) 10 100 1 < $(INPUT)
+	mpirun -np 1 ./$(TARGET) 10 100 3 < $(INPUT)
 
 clean:
 	rm -f $(TARGET)

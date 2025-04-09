@@ -19,4 +19,4 @@ if __name__ == "__main__":
         sys.exit(1)
     
     n = int(sys.argv[1])
-    generate_complete_graph(n, "./testing/input.txt")
+    generate_complete_graph(n, "./testing/{n}n.in")

@@ -4,6 +4,9 @@
         "ctime": "cpp",
         "string": "cpp",
         "__locale": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "iostream": "cpp",
+        "iosfwd": "cpp",
+        "vector": "cpp"
     }
 }

@@ -12,8 +12,8 @@
 #include <bitset>
 #include <climits>
 
-#define SZ 5000
-#define TARGET_NUMBER 1231296480
+#define SZ 5001
+#define TARGET_NUMBER 0
 #define int long long
 
 class DSU {
@@ -158,12 +158,12 @@ void* ant_worker(void* arg) {
     return nullptr;
 }
 
-signed main(int argc, char* argv[]) {
-    std::cout << "Testing\n";
+signed main(int32_t argc, char* argv[]) {
+    
     int size = 5;
     pthread_mutex_init(&mutex, nullptr);
     if (argc < 4) {
-        std::cerr << "Usage: " << argv[0] << " <NUM_ANTS> <NUM_ITERATIONS> <K>\n";
+        std::cerr << "Usage: " << argv[0] << " <NUM_ANTS> <NUM_ITERATIONS> <K> <TARGET_NUMBER>\n";
         return 1;
     }
 
@@ -189,6 +189,7 @@ signed main(int argc, char* argv[]) {
     NUM_ANTS = std::stoi(argv[1]);
     NUM_ITERATIONS = std::stoi(argv[2]);
     K = std::stoi(argv[3]);
+    TARGET_NUMBER = std::stoi(argv[4]);
 
     pthread_t threads[size];
     int thread_ids[size];
