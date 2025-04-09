@@ -12,12 +12,12 @@
 #include <mutex>
 #define int long long
 #define SZ 5001
-#define NUM_THREADS 4  // 可以根據您的 CPU 核心數調整
+#define NUM_THREADS 4 
 using namespace std;
 
 ofstream outputFile("./testing/answer/result.txt");
 vector<pair<int,int>> e[100005];
-mutex result_mutex;  // 保護共享資源的互斥鎖
+mutex result_mutex;
 
 class DSU {
     private:
@@ -125,7 +125,6 @@ class SPTree_Solver {
                             new_tree[id] = 0;
                             int total_weight = work->target.first - work->solver->edge_list[id].weight + work->solver->edge_list[j].weight;
                             
-                            // 使用互斥鎖保護共享資源
                             lock_guard<mutex> lock(result_mutex);
                             if (work->solver->check.find(new_tree) == work->solver->check.end()) {
                                 work->solver->check.insert(new_tree);
@@ -176,14 +175,12 @@ class SPTree_Solver {
         void solveST_by_kth(int kth) {
             for (int i = 1; i < kth; i++) {
                 cout << i << " ok\n";
-                outputFile << i << "-th Spanning Tree = ";
                 outputFile << output_kth_tree() << "\n";
                 
                 if (result.empty()) return;
                 auto target = *result.begin();
                 result.erase(result.begin());
 
-                // 創建執行緒
                 pthread_t threads[NUM_THREADS];
                 int edges_per_thread = EDGE_COUNT / NUM_THREADS;
 
@@ -197,7 +194,6 @@ class SPTree_Solver {
                     pthread_create(&threads[t], nullptr, thread_process_edges, (void*)work);
                 }
 
-                // 等待所有執行緒完成
                 for (int t = 0; t < NUM_THREADS; t++) {
                     pthread_join(threads[t], nullptr);
                 }
@@ -215,7 +211,6 @@ signed main(int32_t argc, char *argv[]) {
     int k = stoi(argv[1]);
     solver.solveMST();
     solver.solveST_by_kth(k);
-    outputFile << k << "-th Spanning Tree = ";
     outputFile << solver.output_kth_tree() << "\n";
     outputFile.close();
     return 0;

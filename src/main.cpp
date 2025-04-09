@@ -2,7 +2,6 @@
 #include <vector>
 #include <cmath>
 #include <fstream>
-#include <mpi.h>
 #include <pthread.h>
 #include <random>
 #include <limits>
@@ -13,8 +12,9 @@
 #include <climits>
 
 #define SZ 5001
-#define TARGET_NUMBER 0
 #define int long long
+
+int TARGET_NUMBER = 0;
 
 class DSU {
     private:
@@ -201,11 +201,7 @@ signed main(int32_t argc, char* argv[]) {
         pthread_join(threads[i], nullptr);      
     }
 
-
-    std::cout << "Finding " << K << "-th Spanning Tree.\n";
-    std::cout << s.rbegin() -> first << "\n";
-    std::cout << "iteration time: " << time_tmp << "\n";
-
+    std::cout << s.rbegin() -> first << ", " << time_tmp << "\n";
     pthread_mutex_destroy(&mutex);
     return 0;
 }
